@@ -129,7 +129,7 @@ i{ font-size: 2rem;}
 }
 
 .blue{
-    background-color: var(--principal);
+    background-color: var(--secundario);
     border-radius: 3rem;
     width: 55%;
     padding : 3rem;
@@ -175,9 +175,7 @@ i{ font-size: 2rem;}
 }
 
 .btn:hover{
-    background-color: var(--secundario);
-    color: var(--blanco);
-    font-weight: bold;
+    background-color: var(--amarillo);
 }
 
 .recomendaciones{ margin-bottom: 10rem;} 

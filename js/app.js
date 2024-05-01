@@ -1,15 +1,4 @@
-//Botones
-const calcular =  document.querySelector("#calcular");
-const cal_otro = document.querySelector("#cal_otro");
-
-//Divs
-const entradas = document.querySelector("#inputs");
-const respuestas = document.querySelector("#respuestas");
-const recomendaciones = document.querySelector("#recomendacion");
-
-//Variables
-let BMI;
-let iconos = [
+const iconos = [
     {
         id: 1,
         nombre: "Por debajo",
@@ -122,13 +111,24 @@ let iconos = [
 
 ];
 
-listeners();
+//Botones
+const calcular =  document.querySelector("#calcular");
+const cal_otro = document.querySelector("#cal_otro");
+
+//Divs
+const entradas = document.querySelector("#inputs");
+const respuestas = document.querySelector("#respuestas");
+const recomendaciones = document.querySelector("#recomendacion");
+const formulario = document.querySelector("#form");
+
+//Variables
+let BMI;
 
 function listeners(){
-    calcular.addEventListener('click', calcularBMI);
-    cal_otro.addEventListener('click', calcularOtro);
+    formulario.addEventListener('submit', calcularBMI)
+    cal_otro.addEventListener('click', Limpiar);
 }
-
+listeners();
 
 
 //Funciones
@@ -137,7 +137,7 @@ function calcularBMI(e){
 
     let peso, altura;
     peso = parseFloat(document.querySelector("#peso").value);
-    altura = parseFloat(document.querySelector("#altura").value);
+    altura = parseFloat(document.querySelector("#altura").value) / 100;
     BMI = peso / (altura * altura);
 
     generarHTML(BMI);
@@ -153,10 +153,9 @@ function generarHTML(BMI){
         html_label.setAttribute("id", "aviso");
         html_label.textContent = `Por favor, llene los campos`;
         entradas.append(html_label);
-        setTimeout(borrarAviso, 2000);
+        setTimeout(borrarAviso, 5000);
 
     } else {
-        
         let html_div = document.createElement("div");
         
         html_div.classList.add("mostrar-respuesta");
@@ -172,17 +171,15 @@ function generarHTML(BMI){
             <label class="${inf_res[0].class} box-respuesta"><p>${inf_res[0].rango}</p> ${inf_res[0].nombre} </label>
         `;
 
-
         respuestas.appendChild(html_div);
         generarRecomendaciones(inf_res);
         inf_res.pop();
 
         //Desaparecer y aparecer botones
         if( cal_otro.classList.contains("ocultar-btn") ){
-            calcular.classList.add("ocultar-btn");
             cal_otro.classList.remove("ocultar-btn");
+            calcular.classList.add("ocultar-btn");
         }
-
     }
 
 }
@@ -199,19 +196,19 @@ function borrarHTML(){
     let padre = document.getElementById("respuestas");
     let hijo = document.getElementById("resultado");
     
-    
     if(hijo.classList.contains("mostrar-respuesta"))
         padre.removeChild(hijo);
 }
 
 
-function calcularOtro(e){
+function Limpiar(e){
     e.preventDefault();
     borrarHTML();
     borrarRecomendaciones(BMI);
 
-    document.getElementById("peso").value = "";
-    document.getElementById("altura").value = "";
+    formulario.reset()
+    // document.getElementById("peso").value = "";
+    // document.getElementById("altura").value = "";
     
     if( calcular.classList.contains("ocultar-btn") ){
         calcular.classList.remove("ocultar-btn");
